@@ -124,13 +124,14 @@ bool ListaAdjacencia::pesquisarAdjacencia(int vertice_U, int vertice_V){
 int ListaAdjacencia::removerAdjacencia(int vertice_U, int vertice_V){
     int verticeRemovido = -1;
 
+    Celula *k = Inicio->prox;
     Celula *i = InicioAdjacencia;
     Celula *j = InicioAdjacencia;
 
-    while (i->prox != nullptr){
+    while (k->prox != nullptr){
         if (i->vertice == vertice_U){
-            if (i->aresta == nullptr){
-                i = Fim;
+            if (k->aresta == nullptr){
+                k = Fim;
             }else{
                 while (i->aresta != nullptr){
                     i = i-> aresta;
@@ -140,6 +141,7 @@ int ListaAdjacencia::removerAdjacencia(int vertice_U, int vertice_V){
                         j->aresta = tmp->aresta;
                         verticeRemovido = tmp->vertice;
                         tmp->aresta == nullptr;
+                        k = Fim;
                         delete tmp;
                     }else{
                         j = j->aresta;
@@ -154,10 +156,10 @@ int ListaAdjacencia::removerAdjacencia(int vertice_U, int vertice_V){
 // Mostrar os elementos dentro da nossa lista e mostrar os relacionamentos de cada vértice.
 
 void ListaAdjacencia::mostrarLista(){
-    for(Celula *i = i->prox; i != nullptr; i = i->prox){
-        cout << "Vértice: " << i->vertice << endl;
-        // for (Celula *j = j->aresta; j != nullptr; j = j->aresta){
-        //     cout << "U " << i->vertice << "-- V " << j->vertice << endl; 
-        // }
+    for(Celula *i = Inicio->prox; i != nullptr; i = i->prox){
+        cout << "Vertice: " << i->vertice << endl;
+        for (Celula *j = i->aresta; j != nullptr; j = j->aresta){
+            cout << "U " << i->vertice << " -- V " << j->vertice << endl; 
+        }
     }
 }

@@ -13,11 +13,14 @@ int main(){
     teste.inserirFim(2);
     teste.inserirFim(3);
     teste.inserirFim(4);
-    // teste.criaAdjacencia(3,4);
-    // teste.criaAdjacencia(4,2);
-    // teste.criaAdjacencia(2,1);
-    // teste.criaAdjacencia(1,3);
-    
+    // cout << teste.pesquisar(1) << endl;
+    // cout << teste.pesquisar(2) << endl; 
+    // cout << teste.pesquisar(3) << endl;
+    // cout << teste.pesquisar(4) << endl;
+    teste.criaAdjacencia(3,4);
+    teste.criaAdjacencia(4,2);
+    teste.criaAdjacencia(2,1);
+    teste.criaAdjacencia(1,3);
     teste.mostrarLista();
 
     return 0;
