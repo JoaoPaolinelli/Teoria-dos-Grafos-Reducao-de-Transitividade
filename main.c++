@@ -25,6 +25,7 @@ int main(){
     teste.criaAdjacencia(2,1);
     teste.criaAdjacencia(1,3);
     teste.mostrarLista();
+    
 
     return 0;
 }
