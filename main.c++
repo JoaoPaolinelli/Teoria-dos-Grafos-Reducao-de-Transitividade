@@ -8,6 +8,9 @@ using namespace std;
 
 int main(){
     
+    // Para ser um grafo não direcionado deve-se criar a adjacência
+    // duas vezes u-v e de v-u;
+
     ListaAdjacencia teste = ListaAdjacencia();
     teste.inserirFim(1);
     teste.inserirFim(2);

@@ -78,16 +78,16 @@ int ListaAdjacencia::remover(int verticeRemover){
 // Primeiro pesquiso o primeiro vértice do relacionamento (u-v), depois fazemos uma verificação rápida se tem algum vértice, 
 // adjacente a ele, que tenha vindo antes, caso tenha, vamos para o fim e inserimos nosso vértice e caso não tenha, insere ali mesmo
 
-void ListaAdjacencia::criaAdjacencia(int vertice, int novoVertice){
+void ListaAdjacencia::criaAdjacencia(int vertice_U, int novoVertice_v){
     for (Celula *i = Inicio->prox; i != nullptr; i = i->prox){
-        if (i->vertice == vertice){
+        if (i->vertice == vertice_U){
             if (i->aresta == nullptr){
-                i->aresta = new Celula(novoVertice);
+                i->aresta = new Celula(novoVertice_v);
                 this->InicioAdjacencia = this->FimAdjacencia = i->aresta;
             }else{
                 for (Celula *j = InicioAdjacencia; j != nullptr ; j = j->aresta){
                     if (j->aresta == nullptr){
-                        j->aresta = new Celula(novoVertice);
+                        j->aresta = new Celula(novoVertice_v);
                         this->FimAdjacencia = j->aresta;
                     }
                 }
