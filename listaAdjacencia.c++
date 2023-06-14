@@ -78,7 +78,7 @@ int ListaAdjacencia::remover(int verticeRemover){
 // Primeiro pesquiso o primeiro vértice do relacionamento (u-v), depois fazemos uma verificação rápida se tem algum vértice, 
 // adjacente a ele, que tenha vindo antes, caso tenha, vamos para o fim e inserimos nosso vértice e caso não tenha, insere ali mesmo
 
-void ListaAdjacencia::criaAdjacecia(int vertice, int novoVertice){
+void ListaAdjacencia::criaAdjacencia(int vertice, int novoVertice){
     for (Celula *i = Inicio->prox; i != nullptr; i = i->prox){
         if (i->vertice == vertice){
             if (i->aresta == nullptr){
@@ -148,6 +148,7 @@ int ListaAdjacencia::removerAdjacencia(int vertice_U, int vertice_V){
             }
         }   
     }
+    return verticeRemovido;
 }
 
 // Mostrar os elementos dentro da nossa lista e mostrar os relacionamentos de cada vértice.
@@ -155,8 +156,8 @@ int ListaAdjacencia::removerAdjacencia(int vertice_U, int vertice_V){
 void ListaAdjacencia::mostrarLista(){
     for(Celula *i = i->prox; i != nullptr; i = i->prox){
         cout << "Vértice: " << i->vertice << endl;
-        for (Celula *j = j->aresta; j != nullptr; j = j->aresta){
-            cout << "U " << i->vertice << "-- V " << j->vertice << endl; 
-        }
+        // for (Celula *j = j->aresta; j != nullptr; j = j->aresta){
+        //     cout << "U " << i->vertice << "-- V " << j->vertice << endl; 
+        // }
     }
 }

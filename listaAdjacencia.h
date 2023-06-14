@@ -21,7 +21,7 @@ public:
     int remover(int vertice);
     bool pesquisar(int vertice);
     int tamanho();
-    void criaAdjacecia(int vertice, int novoVertice);
+    void criaAdjacencia(int vertice, int novoVertice);
     bool pesquisarAdjacencia(int vertice_U, int vertice_V);
     int removerAdjacencia(int vertice_U, int vertice_V);
     void mostrarLista();
