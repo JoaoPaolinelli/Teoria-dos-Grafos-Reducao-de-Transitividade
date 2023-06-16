@@ -79,19 +79,25 @@ int ListaAdjacencia::remover(int verticeRemover){
 // Primeiro pesquiso o primeiro vértice do relacionamento (u-v), depois fazemos uma verificação rápida se tem algum vértice, 
 // adjacente a ele, que tenha vindo antes, caso tenha, vamos para o fim e inserimos nosso vértice e caso não tenha, insere ali mesmo
 
-void ListaAdjacencia::criaAdjacencia(int vertice_U, int novoVertice_v){
+void ListaAdjacencia::criaAdjacencia(int vertice_U, int vertice_v){
+    Celula *j;
     for (Celula *i = Inicio->prox; i != nullptr; i = i->prox){
+        
         if (i->vertice == vertice_U){
             if (i->aresta == nullptr){
-                i->aresta = new Celula(novoVertice_v);
+                i->aresta = new Celula(vertice_v);
                 this->InicioAdjacencia = this->FimAdjacencia = i->aresta;
             }else{
-                for (Celula *j = InicioAdjacencia; j != nullptr ; j = j->aresta){
+                j = i->aresta;
+                while (j != nullptr){
                     if (j->aresta == nullptr){
-                        j->aresta = new Celula(novoVertice_v);
+                        j->aresta = new Celula(vertice_v);
                         this->FimAdjacencia = j->aresta;
+                        // cout <<"true" << endl; 
                     }
+                    j = FimAdjacencia->aresta;
                 }
+                i = Fim;
             }
         }
     }
@@ -158,18 +164,19 @@ int ListaAdjacencia::removerAdjacencia(int vertice_U, int vertice_V){
 
 void ListaAdjacencia::mostrarLista(){
     for(Celula *i = Inicio->prox; i != nullptr; i = i->prox){
-        cout << "Vertice: " << i->vertice << endl;
+        //cout << "Vertice: " << i->vertice << endl;
         for (Celula *j = i->aresta; j != nullptr; j = j->aresta){
             // cout << "U " << i->vertice << " -- V " << j->vertice << endl; 
-            cout << j->aresta << endl;
+            cout << i->vertice << "-" << j->vertice << " ";
         }
+        cout << endl;
     }
 }
 
 vector<int> ListaAdjacencia::DFS(int verticeInicial) {
     // Cria um vetor para marcar os vértices visitados
     vector<bool> visitado(tamanho(), false);
-    vector<int> seqVertices(tamanho(), verticeInicial);
+    vector<int> seqVertices;
 
     // Chama a função auxiliar de busca em profundidade
     DFSUtil(verticeInicial, visitado, seqVertices);
@@ -179,8 +186,9 @@ vector<int> ListaAdjacencia::DFS(int verticeInicial) {
 
 void ListaAdjacencia::DFSUtil(int vertice, vector<bool>& visitado, vector<int>& seqVertices) {
     // Marca o vértice como visitado
+    //cout << vertice << endl;
     visitado[vertice] = true;
-    seqVertices[vertice] = vertice;
+    seqVertices.push_back(vertice);
 
     // Percorre todas as adjacências do vértice
     for (Celula* i = Inicio->prox; i != nullptr; i = i->prox) {
