@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include "celula.h"
 #include "listaAdjacencia.h"
 
@@ -159,7 +160,40 @@ void ListaAdjacencia::mostrarLista(){
     for(Celula *i = Inicio->prox; i != nullptr; i = i->prox){
         cout << "Vertice: " << i->vertice << endl;
         for (Celula *j = i->aresta; j != nullptr; j = j->aresta){
-            cout << "U " << i->vertice << " -- V " << j->vertice << endl; 
+            // cout << "U " << i->vertice << " -- V " << j->vertice << endl; 
+            cout << j->aresta << endl;
+        }
+    }
+}
+
+vector<int> ListaAdjacencia::DFS(int verticeInicial) {
+    // Cria um vetor para marcar os vértices visitados
+    vector<bool> visitado(tamanho(), false);
+    vector<int> seqVertices(tamanho(), verticeInicial);
+
+    // Chama a função auxiliar de busca em profundidade
+    DFSUtil(verticeInicial, visitado, seqVertices);
+
+    return seqVertices;
+}
+
+void ListaAdjacencia::DFSUtil(int vertice, vector<bool>& visitado, vector<int>& seqVertices) {
+    // Marca o vértice como visitado
+    visitado[vertice] = true;
+    seqVertices[vertice] = vertice;
+
+    // Percorre todas as adjacências do vértice
+    for (Celula* i = Inicio->prox; i != nullptr; i = i->prox) {
+        if (i->vertice == vertice) {
+            // Verifica se há arestas
+            Celula* j = i->aresta;
+            while (j != nullptr) {
+                // Chama a DFS para os vértices adjacentes não visitados
+                if (!visitado[j->vertice])
+                    DFSUtil(j->vertice, visitado, seqVertices);
+
+                j = j->aresta;
+            }
         }
     }
 }

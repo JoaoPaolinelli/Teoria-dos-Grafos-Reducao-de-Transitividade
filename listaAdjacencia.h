@@ -4,6 +4,7 @@
 #include "celula.h"
 
 
+
 using namespace std;
 
 class ListaAdjacencia
@@ -25,6 +26,8 @@ public:
     bool pesquisarAdjacencia(int vertice_U, int vertice_V);
     int removerAdjacencia(int vertice_U, int vertice_V);
     void mostrarLista();
+    vector<int> DFS(int verticeInicial);
+    void DFSUtil(int vertice, vector<bool>& visitado, vector<int>& seqVertices);
 
 };
 #endif // LISTAADJACENCIA_H
