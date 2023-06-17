@@ -7,14 +7,15 @@
 
 using namespace std;
 
-class ListaAdjacencia
-{
+class ListaAdjacencia{
+
 public:
 
     Celula *Inicio;
     Celula *Fim;
     Celula *InicioAdjacencia;
     Celula *FimAdjacencia;
+    Celula *novoGrafo;
 
     ListaAdjacencia();
     ~ListaAdjacencia();
@@ -28,6 +29,7 @@ public:
     void mostrarLista();
     vector<int> DFS(int verticeInicial);
     void DFSUtil(int vertice, vector<bool>& visitado, vector<int>& seqVertices);
+    ListaAdjacencia ClonaGrafo(int primeiroVerticeLista);
 
 };
 #endif // LISTAADJACENCIA_H

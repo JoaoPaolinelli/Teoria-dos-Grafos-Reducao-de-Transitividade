@@ -13,6 +13,7 @@ int main(){
     // duas vezes u-v e de v-u;
 
     ListaAdjacencia teste = ListaAdjacencia();
+    ListaAdjacencia novoGrafo = ListaAdjacencia();
     teste.inserirFim(1);
     teste.inserirFim(2);
     teste.inserirFim(3);
@@ -38,6 +39,11 @@ int main(){
 
     cout << "Grafo" << endl;
     teste.mostrarLista();
+
+    cout << "Grafo Clonado" << endl;
+
+    novoGrafo = teste.ClonaGrafo(1);
+    novoGrafo.mostrarLista();
     
 
     return 0;

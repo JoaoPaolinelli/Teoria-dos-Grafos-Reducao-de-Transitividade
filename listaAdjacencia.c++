@@ -11,7 +11,7 @@ using namespace std;
 ListaAdjacencia::ListaAdjacencia(){
     this->Inicio = new Celula();
     this->Fim = this->Inicio;
-    this->InicioAdjacencia = this->FimAdjacencia = nullptr;
+    this->novoGrafo = nullptr;
 }
 
 // Só pra falar que existe mesmo
@@ -203,4 +203,17 @@ void ListaAdjacencia::DFSUtil(int vertice, vector<bool>& visitado, vector<int>& 
             }
         }
     }
+}
+
+ListaAdjacencia ListaAdjacencia::ClonaGrafo(int primeiroVerticeLista){
+    
+    ListaAdjacencia novoGrafo = ListaAdjacencia();    
+    for (Celula *i = Inicio; i != nullptr; i = i->prox){
+        novoGrafo.inserirFim(i->vertice);
+        for (Celula *j = i->aresta; j != nullptr; j = j->aresta){
+            novoGrafo.criaAdjacencia(i->vertice,j->vertice);
+        }
+    }
+    return novoGrafo;
+    
 }
