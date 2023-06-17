@@ -79,29 +79,7 @@ int ListaAdjacencia::remover(int verticeRemover){
 // Primeiro pesquiso o primeiro vértice do relacionamento (u-v), depois fazemos uma verificação rápida se tem algum vértice, 
 // adjacente a ele, que tenha vindo antes, caso tenha, vamos para o fim e inserimos nosso vértice e caso não tenha, insere ali mesmo
 
-void ListaAdjacencia::criaAdjacencia(int vertice_U, int vertice_v){
-    Celula *j;
-    for (Celula *i = Inicio->prox; i != nullptr; i = i->prox){
-        
-        if (i->vertice == vertice_U){
-            if (i->aresta == nullptr){
-                i->aresta = new Celula(vertice_v);
-                this->InicioAdjacencia = this->FimAdjacencia = i->aresta;
-            }else{
-                j = i->aresta;
-                while (j != nullptr){
-                    if (j->aresta == nullptr){
-                        j->aresta = new Celula(vertice_v);
-                        this->FimAdjacencia = j->aresta;
-                        // cout <<"true" << endl; 
-                    }
-                    j = FimAdjacencia->aresta;
-                }
-                i = Fim;
-            }
-        }
-    }
-}
+
 
 // mesma ideia da pesquisa anterior, mas temos 1 for a mais, pois ao mesmo tempo que pesquisamos os vértices
 // temos que pesquisar as adjacências 
@@ -124,6 +102,33 @@ bool ListaAdjacencia::pesquisarAdjacencia(int vertice_U, int vertice_V){
     }
 
     return resultadoPesquisa;
+}
+
+void ListaAdjacencia::criaAdjacencia(int vertice_U, int vertice_v){
+    
+    bool existeU = pesquisar(vertice_U);
+    if (existeU != 1){
+        cout<<"O vértice não existe"<< endl;
+        return;
+    }
+
+    Celula *novaAresta = new Celula(vertice_v);
+
+    for (Celula *i = Inicio->prox; i != nullptr; i = i->prox){
+        if (i->vertice == vertice_U){
+            if (i->aresta == nullptr){
+                i->aresta = novaAresta;
+                this->InicioAdjacencia = this->FimAdjacencia = i->aresta;
+            }else{
+                Celula *j = i->aresta;
+                while (j->aresta != nullptr){
+                    j = j->aresta;
+                }
+                j->aresta = novaAresta;
+                i = Fim;
+            }
+        }
+    }
 }
 
 // A lógica é a mesma do remover anterior, mas com a adaptação necessária para percorrer a adjacência e remover.
