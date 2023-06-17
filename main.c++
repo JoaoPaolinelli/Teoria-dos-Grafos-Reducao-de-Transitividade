@@ -25,19 +25,16 @@ int main(){
     teste.criaAdjacencia(3,2);
     teste.criaAdjacencia(3,5);
 
+    teste.removerAdjacencia(3,5);
 
-    /*Quem for modificar o código da uma olhada no criaAdjacencia bugou legal*/
-    /*Mil perdões por isso e tmj*/ //caio
-
-
-    cout << "Fecho transitivo de cada vertice" << endl;
-    for(int i = 1; i <= 4; i++){    
-        vector<int> testeV = teste.DFS(i);
-        for (const auto& numero : testeV) {
-            cout << numero << " " ;
-        }
-        cout << endl;
-    }
+    // cout << "Fecho transitivo de cada vertice" << endl;
+    // for(int i = 1; i <= 4; i++){    
+    //     vector<int> testeV = teste.DFS(i);
+    //     for (const auto& numero : testeV) {
+    //         cout << numero << " " ;
+    //     }
+    //     cout << endl;
+    // }
 
     cout << "Grafo" << endl;
     teste.mostrarLista();

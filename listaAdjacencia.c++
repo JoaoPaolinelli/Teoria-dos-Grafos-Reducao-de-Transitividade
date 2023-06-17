@@ -136,31 +136,25 @@ void ListaAdjacencia::criaAdjacencia(int vertice_U, int vertice_v){
 int ListaAdjacencia::removerAdjacencia(int vertice_U, int vertice_V){
     int verticeRemovido = -1;
 
-    Celula *k = Inicio->prox;
-    Celula *i = InicioAdjacencia;
-    Celula *j = InicioAdjacencia;
-
-    while (k->prox != nullptr){
+    for (Celula *i = Inicio->prox; i != nullptr; i = i->prox){
         if (i->vertice == vertice_U){
-            if (k->aresta == nullptr){
-                k = Fim;
-            }else{
-                while (i->aresta != nullptr){
-                    i = i-> aresta;
-                    if (j->aresta->vertice == vertice_V){
-                        Celula *tmp = i;
-                        i = FimAdjacencia;
-                        j->aresta = tmp->aresta;
-                        verticeRemovido = tmp->vertice;
-                        tmp->aresta == nullptr;
-                        k = Fim;
-                        delete tmp;
+            Celula *j = i->aresta; 
+            Celula *tmp = nullptr;
+            while (j != nullptr){
+                if (j->vertice == vertice_V){
+                    if (tmp == nullptr){
+                        i->aresta = j->aresta;
                     }else{
-                        j = j->aresta;
+                        tmp->aresta = j->aresta;
                     }
+                    verticeRemovido = j->vertice;
+                    delete j;
+                    break;
                 }
+                tmp = j;
+                j = j->aresta;
             }
-        }   
+        }
     }
     return verticeRemovido;
 }
