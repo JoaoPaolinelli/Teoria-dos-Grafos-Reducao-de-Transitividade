@@ -25,11 +25,11 @@ public:
     int tamanho();
     void criaAdjacencia(int vertice, int novoVertice);
     bool pesquisarAdjacencia(int vertice_U, int vertice_V);
-    int removerAdjacencia(int vertice_U, int vertice_V);
+    void removerAdjacencia(int vertice_U, int vertice_V);
     void mostrarLista();
     vector<int> DFS(int verticeInicial);
     void DFSUtil(int vertice, vector<bool>& visitado, vector<int>& seqVertices);
     ListaAdjacencia ClonaGrafo(int primeiroVerticeLista);
-
+    void reducaoTransitividade();
 };
 #endif // LISTAADJACENCIA_H
