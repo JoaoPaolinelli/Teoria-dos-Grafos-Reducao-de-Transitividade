@@ -31,5 +31,6 @@ public:
     void DFSUtil(int vertice, vector<bool>& visitado, vector<int>& seqVertices);
     ListaAdjacencia ClonaGrafo(int primeiroVerticeLista);
     void reducaoTransitividade();
+    Celula* encontrarCelula(int vertice);
 };
 #endif // LISTAADJACENCIA_H

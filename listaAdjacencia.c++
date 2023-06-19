@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "celula.h"
 #include "listaAdjacencia.h"
 
@@ -133,8 +134,8 @@ void ListaAdjacencia::criaAdjacencia(int vertice_U, int vertice_v){
 
 // A lógica é a mesma do remover anterior, mas com a adaptação necessária para percorrer a adjacência e remover.
 
-int ListaAdjacencia::removerAdjacencia(int vertice_U, int vertice_V){
-    int verticeRemovido = -1;
+void ListaAdjacencia::removerAdjacencia(int vertice_U, int vertice_V){
+    //int verticeRemovido = -1;
 
     for (Celula *i = Inicio->prox; i != nullptr; i = i->prox){
         if (i->vertice == vertice_U){
@@ -147,7 +148,7 @@ int ListaAdjacencia::removerAdjacencia(int vertice_U, int vertice_V){
                     }else{
                         tmp->aresta = j->aresta;
                     }
-                    verticeRemovido = j->vertice;
+                    //verticeRemovido = j->vertice;
                     delete j;
                     break;
                 }
@@ -156,7 +157,7 @@ int ListaAdjacencia::removerAdjacencia(int vertice_U, int vertice_V){
             }
         }
     }
-    return verticeRemovido;
+    //return verticeRemovido;
 }
 
 // Mostrar os elementos dentro da nossa lista e mostrar os relacionamentos de cada vértice.
@@ -179,28 +180,35 @@ vector<int> ListaAdjacencia::DFS(int verticeInicial) {
 
     // Chama a função auxiliar de busca em profundidade
     DFSUtil(verticeInicial, visitado, seqVertices);
-
     return seqVertices;
 }
 
+Celula* ListaAdjacencia::encontrarCelula(int vertice) {
+    for (Celula* i = Inicio->prox; i != nullptr; i = i->prox) {
+        if (i->vertice == vertice) {
+            return i;
+        }
+    }
+    return nullptr; // Retorna nullptr se o vértice não for encontrado
+}
+
+
 void ListaAdjacencia::DFSUtil(int vertice, vector<bool>& visitado, vector<int>& seqVertices) {
     // Marca o vértice como visitado
-    //cout << vertice << endl;
     visitado[vertice] = true;
     seqVertices.push_back(vertice);
 
-    // Percorre todas as adjacências do vértice
-    for (Celula* i = Inicio->prox; i != nullptr; i = i->prox) {
-        if (i->vertice == vertice) {
-            // Verifica se há arestas
-            Celula* j = i->aresta;
-            while (j != nullptr) {
-                // Chama a DFS para os vértices adjacentes não visitados
-                if (!visitado[j->vertice])
-                    DFSUtil(j->vertice, visitado, seqVertices);
+    // Encontra o vértice atual na lista de adjacências
+    Celula* atual = encontrarCelula(vertice);
+    if (atual != nullptr) {
+        // Percorre as adjacências do vértice atual
+        Celula* j = atual->aresta;
+        while (j != nullptr) {
+            // Chama a DFS para os vértices adjacentes não visitados
+            if (!visitado[j->vertice])
+                DFSUtil(j->vertice, visitado, seqVertices);
 
-                j = j->aresta;
-            }
+            j = j->aresta;
         }
     }
 }
@@ -215,5 +223,56 @@ ListaAdjacencia ListaAdjacencia::ClonaGrafo(int primeiroVerticeLista){
         }
     }
     return novoGrafo;
-    
+
+}
+
+
+void ListaAdjacencia::reducaoTransitividade() {
+    // Copia o grafo
+    // Após clonar o grafo, posso fazer a redução de transitividade.
+    ListaAdjacencia grafoOriginal = ClonaGrafo(Inicio->prox->vertice); 
+
+    vector<int> transitividade;
+    vector<int> transitividadeTeste; // Vector dedicado a receber a nova transitividade
+
+    // 1 - Achar todos os fechos
+    for (Celula* i = Inicio->prox; i != nullptr; i = i->prox) {
+        transitividade = DFS(i->vertice);
+
+        // cout << "fecho 1" << endl;
+        // for (int j = 0; j < transitividade.size(); j++) {
+        //     int elemento = transitividade[j];
+        //     std::cout << elemento << std::endl;
+        // }
+
+        // Selecionar 1 aresta
+        for (Celula* j = i->aresta; j != nullptr; j = j->aresta) {
+            // Selecionar uma aresta e remover
+            int verticeRemovido = j->vertice;
+            removerAdjacencia(i->vertice, verticeRemovido);
+            //cout << "vertice" <<  i->vertice << endl;
+            transitividadeTeste = DFS(i->vertice);
+            // cout << "fecho 2" << endl;
+            // for (int k = 0; k < transitividadeTeste.size(); k++) {
+            //     int elemento = transitividadeTeste[k];
+            //     std::cout << elemento << std::endl;
+            // }
+
+            // Comparar para ver se o novo fecho está correto
+            if (!equal(transitividade.begin(), transitividade.end(), transitividadeTeste.begin(), transitividadeTeste.end())) {
+                // Se os fechos não forem iguais, criar uma nova aresta no lugar
+                //cout << "Entrei aqui" << endl;
+                //cout << verticeRemovido << endl;
+                criaAdjacencia(i->vertice, verticeRemovido);
+            }
+            //mostrarLista();
+        }
+        // Repetir isso para todas as relações u-v 
+    }    
+
+    cout << "Grafo original" << endl;
+    grafoOriginal.mostrarLista();
+
+    cout << "Grafo alterado" << endl;
+    mostrarLista();
 }
