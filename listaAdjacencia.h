@@ -4,16 +4,18 @@
 #include "celula.h"
 
 
+
 using namespace std;
 
-class ListaAdjacencia
-{
+class ListaAdjacencia{
+
 public:
 
     Celula *Inicio;
     Celula *Fim;
     Celula *InicioAdjacencia;
     Celula *FimAdjacencia;
+    Celula *novoGrafo;
 
     ListaAdjacencia();
     ~ListaAdjacencia();
@@ -21,10 +23,14 @@ public:
     int remover(int vertice);
     bool pesquisar(int vertice);
     int tamanho();
-    void criaAdjacecia(int vertice, int novoVertice);
+    void criaAdjacencia(int vertice, int novoVertice);
     bool pesquisarAdjacencia(int vertice_U, int vertice_V);
-    int removerAdjacencia(int vertice_U, int vertice_V);
+    void removerAdjacencia(int vertice_U, int vertice_V);
     void mostrarLista();
-
+    vector<int> DFS(int verticeInicial);
+    void DFSUtil(int vertice, vector<bool>& visitado, vector<int>& seqVertices);
+    ListaAdjacencia ClonaGrafo(int primeiroVerticeLista);
+    void reducaoTransitividade();
+    Celula* encontrarCelula(int vertice);
 };
 #endif // LISTAADJACENCIA_H
